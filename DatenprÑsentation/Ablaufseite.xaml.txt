@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window
+	x:Class="Tool.Datenpräsentation.WindowStart" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:WizardProgressBarLibrary;assembly=WizardProgressBarLibrary" Icon="/ProductionPlaner;component/Resources/icon.ico"
+	Title="Tool.Datenpräsentation" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    Height="600" Width="940" BorderBrush="{x:Null}" Foreground="Black" ResizeMode="NoResize" Closing="Window_Closing"
+    xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+    xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+    >
+
+    <Window.Resources>
+        <Style x:Key="Poly1" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Polygon Fill="{TemplateBinding Background}"  Points="10,10 80,10 120,45 80,75 10,75 45,45" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="2"/>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True"/>
+                            <Trigger Property="IsDefaulted" Value="True"/>
+                            <Trigger Property="IsMouseOver" Value="True"/>
+                            <Trigger Property="IsPressed" Value="True"/>
+                            <Trigger Property="IsEnabled" Value="False"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="Poly_Weiter" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            
+                            <Polygon Fill="{TemplateBinding Background}"  Points="5,5 80,5 100,22.5 80,37.5 5,37.5 22.5,22.5" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="2"/>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True"/>
+                            <Trigger Property="IsDefaulted" Value="True"/>
+                            <Trigger Property="IsMouseOver" Value="True"/>
+                            <Trigger Property="IsPressed" Value="True"/>
+                            <Trigger Property="IsEnabled" Value="False"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="Poly_Zurueck" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            
+                            <Polygon Fill="{TemplateBinding Background}"  Points="100,5 25,5 5,22.5 20,37.5 100,37.5 82.5,22.5" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="2"/>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True"/>
+                            <Trigger Property="IsDefaulted" Value="True"/>
+                            <Trigger Property="IsMouseOver" Value="True"/>
+                            <Trigger Property="IsPressed" Value="True"/>
+                            <Trigger Property="IsEnabled" Value="False"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Article Order Grid -->
+    <Grid Name="ArticleOrderGrid" Margin="120,92,0,0" Visibility="Hidden" Grid.RowSpan="2">
+        <Button 
+                Style="{DynamicResource Poly_Weiter}"
+                HorizontalAlignment="Right"
+			VerticalAlignment="Bottom"
+			Margin="0,0,33,11"
+
+			Content="Weiter"
+            Visibility="Hidden"
+			Name="buttonValidation"
+			Click="showButtonValidation" />
+        <Button Name="buttonCalculateOrder" Width="40" Height="40" Click="calculateOrder" VerticalAlignment="Bottom" Margin="488,0,270,127" HorizontalAlignment="Center" ></Button>
+        <Button 
+                Style="{DynamicResource Poly_Zurueck}"
+                Name="buttonBackArticleOrder" Content="Zurück" Click="backArticleOrder" VerticalAlignment="Bottom" Margin="100,0,0,11" HorizontalAlignment="Left" />
+
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="43,18,0,0" Name="textBoxK21" VerticalAlignment="Top" Width="64" />
+        <Label Content="K21:" Height="28" HorizontalAlignment="Left" Margin="10,16,0,0" Name="label1" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,18,660,0" Name="comboBoxK21" VerticalAlignment="Top" Width="67" SelectedIndex="0">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="43,47,0,0" Name="textBoxK22" VerticalAlignment="Top" Width="64" />
+        <Label Content="K22:" Height="28" HorizontalAlignment="Left" Margin="10,45,0,0" Name="label2" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,47,660,0" Name="comboBoxK22" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="43,76,0,0" Name="textBoxK23" VerticalAlignment="Top" Width="64" />
+        <Label Content="K23:" Height="28" HorizontalAlignment="Left" Margin="10,74,0,0" Name="label3" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,76,660,0" Name="comboBoxK23" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="43,105,0,0" Name="textBoxK24" VerticalAlignment="Top" Width="64" />
+        <Label Content="K24:" Height="28" HorizontalAlignment="Left" Margin="10,103,0,0" Name="label4" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,105,660,0" Name="comboBoxK24" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="43,134,0,0" Name="textBoxK25" VerticalAlignment="Top" Width="64" />
+        <Label Content="K25:" Height="28" HorizontalAlignment="Left" Margin="10,132,0,0" Name="label5" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,134,660,0" Name="comboBoxK25" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="43,163,0,0" Name="textBoxK27" VerticalAlignment="Top" Width="64" />
+        <Label Content="K27:" Height="28" HorizontalAlignment="Left" Margin="10,161,0,0" Name="label6" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,163,660,0" Name="comboBoxK27" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="43,192,0,0" Name="textBoxK28" VerticalAlignment="Top" Width="64" />
+        <Label Content="K28:" Height="28" HorizontalAlignment="Left" Margin="10,190,0,0" Name="label7" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,192,660,0" Name="comboBoxK28" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="43,221,0,0" Name="textBoxK32" VerticalAlignment="Top" Width="64" />
+        <Label Content="K32:" Height="28" HorizontalAlignment="Left" Margin="10,219,0,0" Name="label8" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,221,660,0" Name="comboBoxK32" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="43,250,0,0" Name="textBoxK33" VerticalAlignment="Top" Width="64" />
+        <Label Content="K33:" Height="28" HorizontalAlignment="Left" Margin="10,248,0,0" Name="label9" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,250,660,0" Name="comboBoxK33" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="43,279,0,0" Name="textBoxK34" VerticalAlignment="Top" Width="64" />
+        <Label Content="K34:" Height="28" HorizontalAlignment="Left" Margin="10,277,0,0" Name="label10" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,279,660,0" Name="comboBoxK34" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="274,18,0,0" Name="textBoxK35" VerticalAlignment="Top" Width="64" />
+        <Label Content="K35:" Height="28" HorizontalAlignment="Left" Margin="241,16,0,0" Name="label11" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,18,429,0" Name="comboBoxK35" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="274,47,0,0" Name="textBoxK36" VerticalAlignment="Top" Width="64" />
+        <Label Content="K36:" Height="28" HorizontalAlignment="Left" Margin="241,45,0,0" Name="label13" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,47,429,0" Name="comboBoxK36" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="274,76,0,0" Name="textBoxK37" VerticalAlignment="Top" Width="64" />
+        <Label Content="K37:" Height="28" HorizontalAlignment="Left" Margin="241,74,0,0" Name="label14" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,76,429,0" Name="comboBoxK37" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="274,105,0,0" Name="textBoxK38" VerticalAlignment="Top" Width="64" />
+        <Label Content="K38:" Height="28" HorizontalAlignment="Left" Margin="241,103,0,0" Name="label15" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,105,429,0" Name="comboBoxK38" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="274,134,0,0" Name="textBoxK39" VerticalAlignment="Top" Width="64" />
+        <Label Content="K39:" Height="28" HorizontalAlignment="Left" Margin="241,132,0,0" Name="label16" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,134,429,0" Name="comboBoxK39" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="274,163,0,0" Name="textBoxK40" VerticalAlignment="Top" Width="64" />
+        <Label Content="K40:" Height="28" HorizontalAlignment="Left" Margin="241,161,0,0" Name="label17" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,163,429,0" Name="comboBoxK40" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="274,192,0,0" Name="textBoxK41" VerticalAlignment="Top" Width="64" />
+        <Label Content="K41:" Height="28" HorizontalAlignment="Left" Margin="241,190,0,0" Name="label18" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,192,429,0" Name="comboBoxK41" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="274,221,0,0" Name="textBoxK42" VerticalAlignment="Top" Width="64" />
+        <Label Content="K42:" Height="28" HorizontalAlignment="Left" Margin="241,219,0,0" Name="label19" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,221,429,0" Name="comboBoxK42" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="274,250,0,0" Name="textBoxK43" VerticalAlignment="Top" Width="64" />
+        <Label Content="K43:" Height="28" HorizontalAlignment="Left" Margin="241,248,0,0" Name="label20" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,250,429,0" Name="comboBoxK43" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="274,279,0,0" Name="textBoxK44" VerticalAlignment="Top" Width="64" />
+        <Label Content="K44:" Height="28" HorizontalAlignment="Left" Margin="241,277,0,0" Name="label21" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,279,429,0" Name="comboBoxK44" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="529,18,0,0" Name="textBoxK45" VerticalAlignment="Top" Width="64" />
+        <Label Content="K45:" Height="28" HorizontalAlignment="Left" Margin="496,16,0,0" Name="label22" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,18,174,0" Name="comboBoxK45" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="529,47,0,0" Name="textBoxK46" VerticalAlignment="Top" Width="64" />
+        <Label Content="K46:" Height="28" HorizontalAlignment="Left" Margin="496,45,0,0" Name="label23" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,47,174,0" Name="comboBoxK46" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="529,76,0,0" Name="textBoxK47" VerticalAlignment="Top" Width="64" />
+        <Label Content="K47:" Height="28" HorizontalAlignment="Left" Margin="496,74,0,0" Name="label24" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,76,174,0" Name="comboBoxK47" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="529,105,0,0" Name="textBoxK48" VerticalAlignment="Top" Width="64" />
+        <Label Content="K48:" Height="28" HorizontalAlignment="Left" Margin="496,103,0,0" Name="label25" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,105,174,0" Name="comboBoxK48" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="529,134,0,0" Name="textBoxK52" VerticalAlignment="Top" Width="64" />
+        <Label Content="K52:" Height="28" HorizontalAlignment="Left" Margin="496,132,0,0" Name="label26" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,134,174,0" Name="comboBoxK52" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="529,163,0,0" Name="textBoxK53" VerticalAlignment="Top" Width="64" />
+        <Label Content="K53:" Height="28" HorizontalAlignment="Left" Margin="496,161,0,0" Name="label27" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,163,174,0" Name="comboBoxK53" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="529,192,0,0" Name="textBoxK57" VerticalAlignment="Top" Width="64" />
+        <Label Content="K57:" Height="28" HorizontalAlignment="Left" Margin="496,190,0,0" Name="label28" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,192,174,0" Name="comboBoxK57" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="529,221,0,0" Name="textBoxK58" VerticalAlignment="Top" Width="64" />
+        <Label Content="K58:" Height="28" HorizontalAlignment="Left" Margin="496,219,0,0" Name="label29" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,221,174,0" Name="comboBoxK58" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="529,250,0,0" Name="textBoxK59" VerticalAlignment="Top" Width="64" />
+        <Label Content="K59:" Height="28" HorizontalAlignment="Left" Margin="496,248,0,0" Name="label30" VerticalAlignment="Top" />
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,250,174,0" Name="comboBoxK59" SelectedIndex="0" VerticalAlignment="Top" Width="67">
+            <ComboBoxItem Content="Normal" />
+            <ComboBoxItem Content="Schnell" />
+        </ComboBox>
+
+
+    <Image Source="/ProductionPlaner;component/Resources/1.png" Margin="10,0,0,-395" HorizontalAlignment="Left" Width="100" Height="40" VerticalAlignment="Bottom" />
+        <Image Source="/ProductionPlaner;component/Resources/logo.png" Margin="10,0,0,-395" HorizontalAlignment="Left" Width="200" Height="80" VerticalAlignment="Bottom" />
+        <Image Source="/Resources/calculator-icon.jpg" Margin="429,329,342,106"></Image>
+    </Grid>
+</Window>

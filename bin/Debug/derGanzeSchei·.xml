@@ -1,0 +1,63 @@
+<input>
+<qualitycontrol type="no" losequantity="0" delay="8"/>
+<sellwish>
+<item article="1" quantity="0"/>
+<item article="2" quantity="0"/>
+<item article="3" quantity="0"/>
+</sellwish>
+<selldirect>
+<item article="1" quantity="0" price="0.0" penalty="0.0"/>
+<item article="2" quantity="0" price="0.0" penalty="0.0"/>
+<item article="3" quantity="0" price="0.0" penalty="0.0"/>
+</selldirect>
+<orderlist>
+</orderlist>
+<productionlist>
+<production article="49" quantity="10"/>
+<production article="54" quantity="10"/>
+<production article="29" quantity="10"/>
+<production article="50" quantity="10"/>
+<production article="55" quantity="10"/>
+<production article="30" quantity="10"/>
+<production article="51" quantity="10"/>
+<production article="56" quantity="10"/>
+<production article="31" quantity="10"/>
+<production article="1" quantity="10"/>
+<production article="2" quantity="10"/>
+<production article="3" quantity="10"/>
+<production article="16" quantity="10"/>
+<production article="18" quantity="10"/>
+<production article="19" quantity="10"/>
+<production article="20" quantity="10"/>
+<production article="13" quantity="10"/>
+<production article="26" quantity="10"/>
+<production article="10" quantity="10"/>
+<production article="14" quantity="10"/>
+<production article="11" quantity="10"/>
+<production article="15" quantity="10"/>
+<production article="12" quantity="10"/>
+<production article="7" quantity="10"/>
+<production article="4" quantity="10"/>
+<production article="8" quantity="10"/>
+<production article="5" quantity="10"/>
+<production article="9" quantity="10"/>
+<production article="6" quantity="10"/>
+<production article="17" quantity="10"/>
+</productionlist>
+<workingtimelist>
+<workingtime station="1" shift="1" overtime="0"/>
+<workingtime station="2" shift="1" overtime="0"/>
+<workingtime station="3" shift="1" overtime="0"/>
+<workingtime station="4" shift="1" overtime="0"/>
+<workingtime station="6" shift="1" overtime="0"/>
+<workingtime station="7" shift="1" overtime="0"/>
+<workingtime station="8" shift="1" overtime="0"/>
+<workingtime station="9" shift="1" overtime="0"/>
+<workingtime station="10" shift="1" overtime="0"/>
+<workingtime station="11" shift="1" overtime="0"/>
+<workingtime station="12" shift="1" overtime="0"/>
+<workingtime station="13" shift="1" overtime="0"/>
+<workingtime station="14" shift="1" overtime="0"/>
+<workingtime station="15" shift="1" overtime="0"/>
+</workingtimelist>
+</input>
