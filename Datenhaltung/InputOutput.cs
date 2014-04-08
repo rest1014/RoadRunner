@@ -32,10 +32,11 @@ namespace Tool
                 
             }
 
-            bool switchWarehousestock = false;              //Schalter für Lagereinlesen
-            bool switchFutureinwardstockmovement = false;   //Schalter für zukünftigen Wareneingang
-            bool switchWaitinglist = false;                 //Schalter für Waitinglist Workstations und Stock 
-            bool switchOrdersinwork = false;                //Schalter für OrdersinWork
+            bool switchWarehouseStock = false;              //Schalter für Lagereinlesen
+            bool switchFutureInwardStockMovement = false;   //Schalter für zukünftigen Wareneingang
+            bool switchWaitingListWPL = false;              //Schalter für Waitinglist Workstations
+            bool switchWaitingListStock = false;            //Schalter für Waitinglist Stock
+            bool switchOrdersInWork = false;                //Schalter für OrdersinWork
             bool switchWorkplace = false;                   //Schalter für Arbeitsplätze
             int intLastSpacePos;                            //Speichert das letzte Vorkommen eines Leerzeichens von Entry    
             int intOrderMode;                               //Bestellmodus
@@ -54,12 +55,12 @@ namespace Tool
                         break;
 
                     case "WarehouseStock":
-                        switchWarehousestock = !switchWarehousestock;
+                        switchWarehouseStock = !switchWarehouseStock;
                         break;
 
                     case "FutureInwardStockMovements":
                         //switchWarehousestock = !switchWarehousestock;
-                        switchFutureinwardstockmovement = !switchFutureinwardstockmovement;
+                        switchFutureInwardStockMovement = !switchFutureInwardStockMovement;
                         break;
 
                     case "WorkplaceCosts":
@@ -67,7 +68,7 @@ namespace Tool
                         break;
 
                     case "WorkplaceWaitinglist":
-                        switchWaitinglist = !switchWaitinglist;
+                        switchWaitingListWPL = !switchWaitingListWPL;
                         
                         //if (reader.NodeType == XmlNodeType.EndElement)
                         //{
@@ -76,20 +77,20 @@ namespace Tool
                         break;
 
                     case "StockWaitinglist":
-                        switchWaitinglist = !switchWaitinglist;
+                        switchWaitingListStock = !switchWaitingListStock;
                         break;
 
                     case "OrdersBeeingProcessed":
                         //switchWaitinglist = !switchWaitinglist;
-                        switchOrdersinwork = !switchOrdersinwork;
+                        switchOrdersInWork = !switchOrdersInWork;
                         break;
 
                     case "ProcessedOrders":
-                        switchOrdersinwork = !switchOrdersinwork;
+                        //switchOrdersInWork = !switchOrdersInWork;
                         break;
 
                     case "Entry":
-                        if (switchWarehousestock)
+                        if (switchWarehouseStock)
                         {
                             intLastSpacePos = reader.GetAttribute(0).LastIndexOf(" ")+1;
                             t = instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0).Substring(intLastSpacePos)));
@@ -97,7 +98,7 @@ namespace Tool
                             t.Lagerpreis = Convert.ToDouble(reader.GetAttribute(4));
                             break;
                         }
-                        if (switchFutureinwardstockmovement)
+                        if (switchFutureInwardStockMovement)
                         {
                             int teilnr = Convert.ToInt32(reader.GetAttribute(3));
 
@@ -105,7 +106,7 @@ namespace Tool
 
                             Kaufteil kaufds = instance.GetTeil(teilnr) as Kaufteil;
 
-                            if (reader.GetAttribute(2) == "Schnell")
+                            if (reader.GetAttribute(1) == "Fast")
                             {
                                 intOrderMode = 4;
                             }
@@ -124,19 +125,27 @@ namespace Tool
                             break;
                         }
 
-                        if (switchWaitinglist)
+                        if (switchWaitingListWPL)
                         {
                             ap = instance.GetArbeitsplatz(Convert.ToInt32(reader.GetAttribute(0)));
                             intLastSpacePos = reader.GetAttribute(4).LastIndexOf(" ") + 1;
-                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(0).Substring(intLastSpacePos)), Convert.ToInt32(reader.GetAttribute(5)), true);
+                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(4).Substring(intLastSpacePos)), Convert.ToInt32(reader.GetAttribute(5)), true);
                             break;
                         }
 
-                        if (switchOrdersinwork)
+                        if (switchWaitingListStock)
+                        {
+                            intLastSpacePos = reader.GetAttribute(4).LastIndexOf(" ") + 1;
+                            t = instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0).Substring(intLastSpacePos)));
+                            t.Lagerstand -= Convert.ToInt32(reader.GetAttribute(5));
+                            break;
+                        }
+
+                        if (switchOrdersInWork)
                         {
                             ap = instance.GetArbeitsplatz(Convert.ToInt32(reader.GetAttribute(0)));
                             intLastSpacePos = reader.GetAttribute(4).LastIndexOf(" ") + 1;
-                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(0).Substring(intLastSpacePos)), Convert.ToInt32(reader.GetAttribute(5)), true);
+                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(4).Substring(intLastSpacePos)), Convert.ToInt32(reader.GetAttribute(5)), true);
                             break;
                         }
 
@@ -158,18 +167,18 @@ namespace Tool
         public static void WriteInput()
         {
         	CreateOrResetFile();
-        		
+        	
             //Dateianfang
-            WriteFile("<input>");
-            
-            //Qualitaetskontrolle
-            WriteFile("<qualitycontrol type=\"no\" losequantity=\"0\" delay=\"8\"/>");
+            WriteFile("<PeriodInput>");
             
             WriteVerkaufswuensche();
-			WriteDirekteVerkaeufe();
 			WriteBestellungen();
 			WriteProduktionsauftraege();
 			WriteArbeitsplaetze();
+
+            //Rest
+            WriteFile("<MarketplaceTransactions />");
+            WriteFile("<IsQualityControlEnabled>false</IsQualityControlEnabled>");
 
 			//Dateiende
             WriteFile("</input>");
@@ -186,69 +195,88 @@ namespace Tool
 
         private static void WriteVerkaufswuensche()
         {
-        
-            WriteFile("<sellwish>");
-            WriteFile("<item article=\"1\" quantity=\""+ (instance.GetTeil(1) as ETeil).VerbrauchAktuell +"\"/>");
-            WriteFile("<item article=\"2\" quantity=\""+ (instance.GetTeil(2) as ETeil).VerbrauchAktuell +"\"/>");
-			WriteFile("<item article=\"3\" quantity=\""+ (instance.GetTeil(3) as ETeil).VerbrauchAktuell +"\"/>");
-            WriteFile("</sellwish>");
+            WriteFile("<SalesWishes>");
+
+            for (int i = 1; i < 4; ++i)
+            {
+                ETeil et = instance.GetTeil(i) as ETeil;
+
+                WriteFile("<SalesWish>");
+                WriteFile("<SalesItemInternalNumber>" + i + "</SalesItemInternalNumber>");
+                WriteFile("<SaleQuantity>" + et.VerbrauchAktuell + "</SaleQuantity>");
+                WriteFile("<DirectSaleQuantity>" + "0" + "</DirectSaleQuantity>");
+                WriteFile("<DirectSalePrice>" + "0.0" + "</DirectSalePrice>");
+                WriteFile("<DirectSalePenalty>" + "0.0" + "</DirectSalePenalty>");
+                WriteFile("</SalesWish>");
+            }
+
+            WriteFile("</SalesWishes>");    
+
         }
-        
-        private static void WriteDirekteVerkaeufe()
-        {
-        //Direkte Verkaeufe
-			WriteFile("<selldirect>");
-			WriteFile("<item article=\"1\" quantity=\"0\" price=\"0.0\" penalty=\"0.0\"/>");
-			WriteFile("<item article=\"2\" quantity=\"0\" price=\"0.0\" penalty=\"0.0\"/>");
-			WriteFile("<item article=\"3\" quantity=\"0\" price=\"0.0\" penalty=\"0.0\"/>");
-			WriteFile("</selldirect>");
-        }
-        
+         
         private static void WriteBestellungen()
         {
         //Bestellungen
-            WriteFile("<orderlist>");
+            WriteFile("<ItemOrders>");
 
             foreach(Bestellposition bp in instance.Bestellung)
             {
-            	WriteFile("<order article=\"" + bp.Kaufteil.Nummer + "\" quantity=\""  + bp.Menge + "\" modus=\"" + bp.OutputEil + "\"/>");
+                WriteFile("<ItemOrder>");
+                WriteFile("<ItemInternalNumber>" + bp.Kaufteil.Nummer + "</ItemInternalNumber>");
+                WriteFile("<Quantity>" + bp.Menge + "</Quantity>");
+
+                if (bp.OutputEil == 4)
+                {
+                    WriteFile("<Supplier>" + "Fast" + "</Supplier>");
+                }
+                else
+                {
+                    WriteFile("<Supplier>" + "Normal" + "</Supplier>");
+                }
+                WriteFile("</ItemOrder>");
             }
 
-            WriteFile("</orderlist>");
+            WriteFile("</ItemOrders>");
         }
         
         private static void WriteProduktionsauftraege()
         {
         //Produktionsaufträge
-            WriteFile("<productionlist>");
+            WriteFile("<ProductionOrders>");
 
             foreach(int z in instance.Reihenfolge)
             {
-            	if ((instance.GetTeil(z) as ETeil).Produktionsmenge == 0) {
-            		WriteFile("<production article=\"" + z + "\" quantity=\"10\"/>");
-            	} else {
-            	WriteFile("<production article=\"" + z + "\" quantity=\"" + (instance.GetTeil(z) as ETeil).Produktionsmenge + "\"/>");
-            	}
+                ETeil et = instance.GetTeil(z) as ETeil;
+
+                WriteFile("<ProductionOrder>");
+                WriteFile("<ItemInternalNumber>" + et.Nummer + "</ItemInternalNumber>");
+                WriteFile("<Quantity>" + et.Produktionsmenge + "</Quantity>");
+
+                WriteFile("</ProductionOrder>");	
             }
-            
-            WriteFile("</productionlist>");
+            WriteFile("</ProductionOrders>");
         }
         
         //Arbeitsplatz Ueberstunden und Schichten
         private static void WriteArbeitsplaetze()
         {
-            WriteFile("<workingtimelist>");
+            WriteFile("<WorkplaceShifts>");
 
             for (int i = 1; i <= 15; i++)
             {
                 if (i == 5)
                 {
+                    //Ueberspringe des AP 5, da dieser nicht existiert
                     i++;
                 }
-				WriteFile("<workingtime station=\"" + i + "\" shift=\"" +  instance.GetArbeitsplatz(i).Schichten + "\" overtime=\"" +instance.GetArbeitsplatz(i).UeberMin + "\"/>");
-           }
 
-            WriteFile("</workingtimelist>");
+                WriteFile("<WorkplaceShift>");
+                WriteFile("<WorkplaceName>" + i +"</WorkplaceName>");
+                WriteFile("<Shifts>" + instance.GetArbeitsplatz(i).Schichten + "</Shifts>");
+                WriteFile("<OvertimeInMinutes>" + instance.GetArbeitsplatz(i).UeberMin + "</OvertimeInMinutes>");
+                WriteFile("</WorkplaceShift>");
+           }
+            WriteFile("</WorkplaceShifts>");
         }
 
         /// <summary>
