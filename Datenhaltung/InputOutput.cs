@@ -32,12 +32,11 @@ namespace Tool
                 
             }
 
-
-            bool switchWarehousestock = false;       //Schalter für Lagereinlesen
-            bool switchFutureinwardstockmovement = false;       //Schalter für zukünftigen Wareneingang
-            bool switchWaitinglist = false;       //Schalter für Waitinglist Workstations und Stock
-            bool switchOrdersinwork = false;       //Schalter für OrdersinWork
-            bool switchWorkplace = false;           //Schalter für Arbeitsplätze
+            bool switchWarehousestock = false;              //Schalter für Lagereinlesen
+            bool switchFutureinwardstockmovement = false;   //Schalter für zukünftigen Wareneingang
+            bool switchWaitinglist = false;                 //Schalter für Waitinglist Workstations und Stock
+            bool switchOrdersinwork = false;                //Schalter für OrdersinWork
+            bool switchWorkplace = false;                   //Schalter für Arbeitsplätze
 
             Arbeitsplatz ap = instance.GetArbeitsplatz(1);
 
@@ -46,30 +45,30 @@ namespace Tool
 
                 switch (reader.Name)
                 {
-                    case "results":
+                    case "PeriodResults":
                         if(instance.AktuellePeriode == -1)
                             instance.AktuellePeriode = Convert.ToInt32(reader.GetAttribute("period")) + 1;
                         break;
 
-                    case "warehousestock":
+                    case "WarehouseStock":
                         switchWarehousestock = !switchWarehousestock;
                         break;
 
-                    case "article":
+                    case "Entry":
                         if (switchWarehousestock)
                         {
-                            instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0))).Lagerstand = Convert.ToInt32(reader.GetAttribute(1));
+                            instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0))).Lagerstand = Convert.ToInt32(reader.GetAttribute(2));
 
                             instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0))).Lagerpreis = Convert.ToDouble(reader.GetAttribute(4));
                         }
                         break;
 
-                    case "futureinwardstockmovement":
+                    case "FutureInwardStockMovements":
                         switchWarehousestock = !switchWarehousestock;
                         switchFutureinwardstockmovement = !switchFutureinwardstockmovement;
                         break;
 
-                    case "order":
+                    case "InwardStockMovements":
                         if (switchFutureinwardstockmovement)
                         {
                             //int test = Convert.ToInt32(reader.GetAttribute(3));
@@ -83,13 +82,13 @@ namespace Tool
                         }
                         break;
 
-                    case "waitinglistworkstations":
+                    case "WorkplaceWaitinglist":
                         switchFutureinwardstockmovement = !switchFutureinwardstockmovement;
                         switchWaitinglist = !switchWaitinglist;
 
                         break;
 
-                    case "workplace":
+                    case "WorkplaceCosts":
                         switchWorkplace = false;
                         if (reader.NodeType == XmlNodeType.EndElement)
                         {
@@ -114,7 +113,7 @@ namespace Tool
                         }
                         break;
 
-                    case "waitinglist":
+                    case "StockWaitinglist":
 
                         if (switchWorkplace)
                         {
@@ -124,12 +123,12 @@ namespace Tool
 
                         break;
 
-                    case "ordersinwork":
+                    case "OrdersBeeingProcessed":
                         switchWaitinglist = !switchWaitinglist;
                         switchOrdersinwork = !switchOrdersinwork;
                         break;
 
-                    case "completedorders":
+                    case "ProcessedOrders":
                         switchOrdersinwork = !switchOrdersinwork;
                         break;
                 }
