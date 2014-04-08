@@ -34,9 +34,12 @@ namespace Tool
 
             bool switchWarehousestock = false;              //Schalter für Lagereinlesen
             bool switchFutureinwardstockmovement = false;   //Schalter für zukünftigen Wareneingang
-            bool switchWaitinglist = false;                 //Schalter für Waitinglist Workstations und Stock
+            bool switchWaitinglist = false;                 //Schalter für Waitinglist Workstations und Stock 
             bool switchOrdersinwork = false;                //Schalter für OrdersinWork
             bool switchWorkplace = false;                   //Schalter für Arbeitsplätze
+            int intLastSpacePos;                            //Speichert das letzte Vorkommen eines Leerzeichens von Entry    
+            int intOrderMode;                               //Bestellmodus
+            Teil t;
 
             Arbeitsplatz ap = instance.GetArbeitsplatz(1);
 
@@ -54,83 +57,92 @@ namespace Tool
                         switchWarehousestock = !switchWarehousestock;
                         break;
 
-                    case "Entry":
-                        if (switchWarehousestock)
-                        {
-                            instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0))).Lagerstand = Convert.ToInt32(reader.GetAttribute(2));
-
-                            instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0))).Lagerpreis = Convert.ToDouble(reader.GetAttribute(4));
-                        }
-                        break;
-
                     case "FutureInwardStockMovements":
-                        switchWarehousestock = !switchWarehousestock;
+                        //switchWarehousestock = !switchWarehousestock;
                         switchFutureinwardstockmovement = !switchFutureinwardstockmovement;
-                        break;
-
-                    case "InwardStockMovements":
-                        if (switchFutureinwardstockmovement)
-                        {
-                            //int test = Convert.ToInt32(reader.GetAttribute(3));
-                            //int test2 = Convert.ToInt32(reader.GetAttribute(3));
-                            int teilnr = Convert.ToInt32(reader.GetAttribute(3));
-                            (instance.GetTeil(teilnr) as Kaufteil).ErwarteteBestellung = Convert.ToInt32(reader.GetAttribute(4)) + (instance.GetTeil(teilnr) as Kaufteil).ErwarteteBestellung;
-                            //Kaufteil kaudfds = instance.GetTeil(Convert.ToInt32(reader.GetAttribute(3))) as Kaufteil;
-
-                            Kaufteil kaufds = instance.GetTeil(teilnr) as Kaufteil;
-                            kaufds.addBestellung(instance.AktuellePeriode, Convert.ToInt32(reader.GetAttribute(0)), Convert.ToInt32(reader.GetAttribute(2)), Convert.ToInt32(reader.GetAttribute(4)));
-                        }
-                        break;
-
-                    case "WorkplaceWaitinglist":
-                        switchFutureinwardstockmovement = !switchFutureinwardstockmovement;
-                        switchWaitinglist = !switchWaitinglist;
-
                         break;
 
                     case "WorkplaceCosts":
-                        switchWorkplace = false;
-                        if (reader.NodeType == XmlNodeType.EndElement)
-                        {
-                            break;
-                        }
-                        if (switchWaitinglist)
-                        {
-                            int i = Convert.ToInt32(reader.GetAttribute(1));
-                            if (Convert.ToInt32(reader.GetAttribute(1)) > 0)
-                            {
-                                switchWorkplace = !switchWorkplace;
-                            }
+                        switchWorkplace = !switchWorkplace;
+                        break;
 
-                            ap = instance.GetArbeitsplatz(Convert.ToInt32(reader.GetAttribute(0)));
-                        }
-                        if (switchOrdersinwork)
-                        {
-
-                            ap = instance.GetArbeitsplatz(Convert.ToInt32(reader.GetAttribute(0)));
-                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(4)), Convert.ToInt32(reader.GetAttribute(5)), true);
-
-                        }
+                    case "WorkplaceWaitinglist":
+                        switchWaitinglist = !switchWaitinglist;
+                        
+                        //if (reader.NodeType == XmlNodeType.EndElement)
+                        //{
+                        //    break;
+                        //}
                         break;
 
                     case "StockWaitinglist":
-
-                        if (switchWorkplace)
-                        {
-                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(4)), Convert.ToInt32(reader.GetAttribute(5)), true);
-
-                        }
-
+                        switchWaitinglist = !switchWaitinglist;
                         break;
 
                     case "OrdersBeeingProcessed":
-                        switchWaitinglist = !switchWaitinglist;
+                        //switchWaitinglist = !switchWaitinglist;
                         switchOrdersinwork = !switchOrdersinwork;
                         break;
 
                     case "ProcessedOrders":
                         switchOrdersinwork = !switchOrdersinwork;
                         break;
+
+                    case "Entry":
+                        if (switchWarehousestock)
+                        {
+                            intLastSpacePos = reader.GetAttribute(0).LastIndexOf(" ")+1;
+                            t = instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0).Substring(intLastSpacePos)));
+                            t.Lagerstand = Convert.ToInt32(reader.GetAttribute(2));
+                            t.Lagerpreis = Convert.ToDouble(reader.GetAttribute(4));
+                            break;
+                        }
+                        if (switchFutureinwardstockmovement)
+                        {
+                            int teilnr = Convert.ToInt32(reader.GetAttribute(3));
+
+                            (instance.GetTeil(teilnr) as Kaufteil).ErwarteteBestellung = Convert.ToInt32(reader.GetAttribute(4)) + (instance.GetTeil(teilnr) as Kaufteil).ErwarteteBestellung;
+
+                            Kaufteil kaufds = instance.GetTeil(teilnr) as Kaufteil;
+
+                            if (reader.GetAttribute(2) == "Schnell")
+                            {
+                                intOrderMode = 4;
+                            }
+                            else
+                            {
+                                intOrderMode = 5; //Normal
+                            }
+
+                            kaufds.addBestellung(instance.AktuellePeriode, Convert.ToInt32(reader.GetAttribute(0).Substring(0, 1)), intOrderMode, Convert.ToInt32(reader.GetAttribute(4)));
+                            break;
+                        }
+
+                        if (switchWorkplace)
+                        {
+                            //ap = instance.GetArbeitsplatz(Convert.ToInt32(reader.GetAttribute(0)));
+                            break;
+                        }
+
+                        if (switchWaitinglist)
+                        {
+                            ap = instance.GetArbeitsplatz(Convert.ToInt32(reader.GetAttribute(0)));
+                            intLastSpacePos = reader.GetAttribute(4).LastIndexOf(" ") + 1;
+                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(0).Substring(intLastSpacePos)), Convert.ToInt32(reader.GetAttribute(5)), true);
+                            break;
+                        }
+
+                        if (switchOrdersinwork)
+                        {
+                            ap = instance.GetArbeitsplatz(Convert.ToInt32(reader.GetAttribute(0)));
+                            intLastSpacePos = reader.GetAttribute(4).LastIndexOf(" ") + 1;
+                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(0).Substring(intLastSpacePos)), Convert.ToInt32(reader.GetAttribute(5)), true);
+                            break;
+                        }
+
+                        break;
+
+                    
                 }
 
             }
