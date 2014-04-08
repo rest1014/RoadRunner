@@ -106,13 +106,13 @@ namespace Tool
 
                             Kaufteil kaufds = instance.GetTeil(teilnr) as Kaufteil;
 
-                            if (reader.GetAttribute(1) == "Fast")
+                            if (reader.GetAttribute(1) == "Normal")
                             {
-                                intOrderMode = 4;
+                                intOrderMode = 5;
                             }
                             else
                             {
-                                intOrderMode = 5; //Normal
+                                intOrderMode = 4; //Fast
                             }
 
                             kaufds.addBestellung(instance.AktuellePeriode, Convert.ToInt32(reader.GetAttribute(0).Substring(0, 1)), intOrderMode, Convert.ToInt32(reader.GetAttribute(4)));
@@ -181,7 +181,7 @@ namespace Tool
             WriteFile("<IsQualityControlEnabled>false</IsQualityControlEnabled>");
 
 			//Dateiende
-            WriteFile("</input>");
+            WriteFile("</PeriodInput>");
         }
         
         //Datei erstellen. Wenn bereits vorhanden, Inhalt loeschen
@@ -225,13 +225,13 @@ namespace Tool
                 WriteFile("<ItemInternalNumber>" + bp.Kaufteil.Nummer + "</ItemInternalNumber>");
                 WriteFile("<Quantity>" + bp.Menge + "</Quantity>");
 
-                if (bp.OutputEil == 4)
+                if (bp.OutputEil == 5)
                 {
-                    WriteFile("<Supplier>" + "Fast" + "</Supplier>");
+                    WriteFile("<Supplier>" + "Normal" + "</Supplier>");
                 }
                 else
                 {
-                    WriteFile("<Supplier>" + "Normal" + "</Supplier>");
+                    WriteFile("<Supplier>" + "Fast" + "</Supplier>");
                 }
                 WriteFile("</ItemOrder>");
             }
