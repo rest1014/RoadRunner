@@ -192,3 +192,9 @@ C:\Users\Stephan\Documents\Visual Studio 2010\Projects\RoadRunner_Ibsys2\Tool\ob
 C:\Users\Stephan\Documents\Visual Studio 2010\Projects\RoadRunner_Ibsys2\Tool\obj\Release\ProductionPlaner.csproj.GenerateResource.Cache
 Z:\Downloads\RoadRunner_Ibsys2\Tool\obj\Release\ProductionPlaner.exe
 Z:\Downloads\RoadRunner_Ibsys2\Tool\obj\Release\ProductionPlaner.pdb
+D:\Ibsys2\git-roadrunner\obj\Release\Datenpräsentation\Prognose.baml
+D:\Ibsys2\git-roadrunner\obj\Release\Datenpräsentation\Puffer.baml
+D:\Ibsys2\git-roadrunner\obj\Release\Datenpräsentation\Prognose.g.cs
+D:\Ibsys2\git-roadrunner\obj\Release\Datenpräsentation\Puffer.g.cs
+D:\Ibsys2\git-roadrunner\obj\Release\ProductionPlaner_Content.g.cs
+D:\Ibsys2\git-roadrunner\obj\Release\ProductionPlaner_MarkupCompile.cache

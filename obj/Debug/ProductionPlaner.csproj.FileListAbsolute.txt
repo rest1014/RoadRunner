@@ -263,3 +263,9 @@ C:\Users\Steffen\Source\Repos\RoadRunner\obj\Debug\Tool.Properties.Resources.res
 C:\Users\Steffen\Source\Repos\RoadRunner\obj\Debug\ProductionPlaner.csproj.GenerateResource.Cache
 C:\Users\Steffen\Source\Repos\RoadRunner\obj\Debug\ProductionPlaner.exe.manifest
 C:\Users\Steffen\Source\Repos\RoadRunner\obj\Debug\ProductionPlaner.application
+D:\Ibsys2\git-roadrunner\obj\Debug\Datenpräsentation\Prognose.baml
+D:\Ibsys2\git-roadrunner\obj\Debug\Datenpräsentation\Puffer.baml
+D:\Ibsys2\git-roadrunner\obj\Debug\Datenpräsentation\Prognose.g.cs
+D:\Ibsys2\git-roadrunner\obj\Debug\Datenpräsentation\Puffer.g.cs
+D:\Ibsys2\git-roadrunner\obj\Debug\ProductionPlaner_Content.g.cs
+D:\Ibsys2\git-roadrunner\obj\Debug\ProductionPlaner_MarkupCompile.cache
