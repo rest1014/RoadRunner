@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Data;
 using System.IO;
+using System.Diagnostics;
 
 namespace Tool
 {
@@ -129,13 +130,17 @@ namespace Tool
                         {
                             ap = instance.GetArbeitsplatz(Convert.ToInt32(reader.GetAttribute(0)));
                             intLastSpacePos = reader.GetAttribute(4).LastIndexOf(" ") + 1;
-                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(4).Substring(intLastSpacePos)), Convert.ToInt32(reader.GetAttribute(5)), true);
+                            //Debug.WriteLine(reader.GetAttribute(2));
+                            //Debug.WriteLine(Convert.ToInt32(reader.GetAttribute(4).Substring(intLastSpacePos)));
+                            //Debug.WriteLine(Convert.ToInt32(Convert.ToDouble(reader.GetAttribute(5))));
+                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(4).Substring(intLastSpacePos)), Convert.ToInt32(Convert.ToDouble(reader.GetAttribute(5))), true);
                             break;
                         }
 
                         if (switchWaitingListStock)
                         {
-                            intLastSpacePos = reader.GetAttribute(4).LastIndexOf(" ") + 1;
+                            intLastSpacePos = reader.GetAttribute(0).LastIndexOf(" ") + 1;
+                            //Debug.WriteLine(reader.GetAttribute(0).Substring(intLastSpacePos));
                             t = instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0).Substring(intLastSpacePos)));
                             t.Lagerstand -= Convert.ToInt32(reader.GetAttribute(5));
                             break;
