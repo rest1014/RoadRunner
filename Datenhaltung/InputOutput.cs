@@ -253,11 +253,14 @@ namespace Tool
             {
                 ETeil et = instance.GetTeil(z) as ETeil;
 
-                WriteFile("<ProductionOrder>");
-                WriteFile("<ItemInternalNumber>" + et.Nummer + "</ItemInternalNumber>");
-                WriteFile("<Quantity>" + et.Produktionsmenge + "</Quantity>");
+                if (et.Produktionsmenge > 0)
+                {
+                    WriteFile("<ProductionOrder>");
+                    WriteFile("<ItemInternalNumber>" + et.Nummer + "</ItemInternalNumber>");
+                    WriteFile("<Quantity>" + et.Produktionsmenge + "</Quantity>");
 
-                WriteFile("</ProductionOrder>");	
+                    WriteFile("</ProductionOrder>");
+                }
             }
             WriteFile("</ProductionOrders>");
         }
