@@ -42,14 +42,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProductionPlaner.exe" size="2142208">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.QualityTools.Testing.Fakes.dll" size="304784">
+      <assemblyIdentity name="Microsoft.QualityTools.Testing.Fakes" version="11.0.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <dsig:DigestValue>ZOSv8/NQEQxNssUvL99IKtcg0Sw=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProductionPlaner.exe" size="2138112">
       <assemblyIdentity name="ProductionPlaner" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>TNadWg6+qhW8AAqMuWCbH6jrCQw=</dsig:DigestValue>
+        <dsig:DigestValue>hZNRdn63lbrh1t5khl3a0AqsJb4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -66,18 +78,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WizardProgressBarLibrary.dll" size="13824">
-      <assemblyIdentity name="WizardProgressBarLibrary" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Mm1wRZHbEsxpIHwwpsSvkWalvd4=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WPFToolkit.dll" size="467288">
       <assemblyIdentity name="WPFToolkit" version="3.5.40128.1" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -89,22 +89,22 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Datenpräsentation\Ablaufseite.xaml.txt" size="21806">
+  <file name="Datenpräsentation\Ablaufseite.xaml.txt" size="21716">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>5LzufqcX8GA2dBKzLWNVnInk3Uc=</dsig:DigestValue>
+      <dsig:DigestValue>CMmbOpmQozJzDIn7JzbONSlsFs4=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Datenpräsentation\Ergebnis.xaml.txt" size="10635">
+  <file name="Datenpräsentation\Ergebnis.xaml.txt" size="10554">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>6+clY40aDO6yVvFneczTTgdtc4A=</dsig:DigestValue>
+      <dsig:DigestValue>WnW6PvpP+KN65gPB/JJuiT0MNBM=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Datenpräsentation\forecast.xaml.txt" size="18661">
