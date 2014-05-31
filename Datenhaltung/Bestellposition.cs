@@ -8,7 +8,7 @@ namespace Tool
     {
         private Kaufteil kaufteil;
         private int menge;
-        private bool eil;
+        private bool eil; 
 
         public Bestellposition(Kaufteil k, int menge_, bool eil_)
         {

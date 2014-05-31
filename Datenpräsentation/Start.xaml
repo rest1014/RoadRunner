@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Window
 	x:Class="Tool.Datenpräsentation.WindowStart" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Icon="/ProductionPlaner;component/Resources/icon.ico"
+    xmlns:controls="clr-namespace:WizardProgressBarLibrary;assembly=WizardProgressBarLibrary" Icon="/ProductionPlaner;component/Resources/icon.ico"
 	Title="Roadrunner Bikes - PPS" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     Height="600" Width="940" BorderBrush="{x:Null}" Foreground="Black" ResizeMode="NoResize" Closing="Window_Closing"
     xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
@@ -100,13 +100,14 @@
         </Grid>
         
         <!--Margin="110,18,18,20"-->
-            <!-- Progress Bar 
+            <!-- Progress Bar
             <controls:WizardProgressBar Width="850" HorizontalAlignment="center" VerticalAlignment="Top" ItemsSource="{Binding Steps}" Foreground="LawnGreen" Progress="{Binding Progress}" SnapsToDevicePixels="True"  Grid.RowSpan="2" Margin="0,22,0,0">
                 <controls:WizardProgressBar.RenderTransform>
                     <RotateTransform Angle="0"/>
                 </controls:WizardProgressBar.RenderTransform>
-            </controls:WizardProgressBar> -->
-
+            </controls:WizardProgressBar>
+            -->
+        
             <Label Content="WILLKOMMEN" Height="24" FontSize="12" HorizontalAlignment="Left" Margin="75,0,0,0" Name="labelWILLKOMMEN" VerticalAlignment="Top" Visibility="Visible" />
             <Label Content="STAMMDATEN" Height="24" FontSize="12" HorizontalAlignment="Left" Margin="215,0,0,0" Name="labelINPUT" VerticalAlignment="Top" />
             <Label Content="PROGNOSE" Height="24" FontSize="12" HorizontalAlignment="Left" Margin="365,0,0,0" Name="labelVERKAUFSPROGNOSE" VerticalAlignment="Top" />
@@ -147,9 +148,11 @@
             </ComboBox>
                 <Button Content="Browse" Height="32" HorizontalAlignment="Left" Margin="455,135,0,0"
                 Name="buttonSelectFile" VerticalAlignment="Top" Width="88" Click="buttonBrowseFile" Grid.Row="1" />
-            <Button Content="Load Data" Height="32" HorizontalAlignment="Left" Margin="455,135,0,0"
+                <!--
+                <Button Content="Load Data" Height="32" HorizontalAlignment="Left" Margin="455,135,0,0"
                 Name="buttonSelectURL" VerticalAlignment="Top" Width="88" Click="buttonBrowseURL" Grid.Row="1" Visibility="Hidden"/>
-
+                -->
+                
             <StackPanel>
                     <RadioButton Name="XML" GroupName="DownloadLocation" Content="XML Datei" IsChecked="True" Checked="XML_OnChecked"/>
                     <RadioButton Name="Internet" GroupName="DownloadLocation" Content="Internet" Checked="Internet_OnChecked"/>
