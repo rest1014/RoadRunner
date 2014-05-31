@@ -32,7 +32,7 @@ namespace Tool.Datenpräsentation
         static bool fertig = false;
 
         const String MSG_KEINE_NUM_WERTE_IN_PUFFERFELD = "Einige Pufferfelder enthalten keine numerischen Zeichen!";
-        const String MSG_FILENAME_INPUT_XML = "207_6_8input";
+        const String MSG_FILENAME_INPUT_XML = "Input_Period_"; 
 
 		public WindowStart()
 		{
@@ -114,7 +114,7 @@ namespace Tool.Datenpräsentation
             dc.Inet = true;
             dc.Xml = false;
 
-            buttonSelectURL.Visibility = System.Windows.Visibility.Visible;
+            //buttonSelectURL.Visibility = System.Windows.Visibility.Visible;
             PeriodCombo.Visibility = System.Windows.Visibility.Visible;
         }
 
@@ -126,7 +126,7 @@ namespace Tool.Datenpräsentation
             dc.Inet = false;
             dc.Xml = true;
 
-            buttonSelectURL.Visibility = System.Windows.Visibility.Hidden;
+            //buttonSelectURL.Visibility = System.Windows.Visibility.Hidden;
             PeriodCombo.Visibility = System.Windows.Visibility.Hidden;
         }
 
@@ -149,7 +149,7 @@ namespace Tool.Datenpräsentation
             // Set filter for file extension and default file extension
             slg.CheckPathExists = true;
             slg.DefaultExt = ".xml";
-            slg.FileName = MSG_FILENAME_INPUT_XML;
+            slg.FileName = MSG_FILENAME_INPUT_XML + InputOutput.GetPeriod();
             slg.Filter = "Result file (.xml)|*.xml";
 
             // Display OpenFileDialog by calling ShowDialog method
@@ -177,6 +177,8 @@ namespace Tool.Datenpräsentation
             }
         }
 
+        /*
+         * Anbindung nicht mehr möglich
         private void buttonBrowseURL(object sender, RoutedEventArgs args)
         {
             String per = PeriodCombo.Text;
@@ -200,7 +202,7 @@ namespace Tool.Datenpräsentation
             genutzt = true;
             
         }
-
+        */
         private void buttonBrowseFile(object sender, RoutedEventArgs args)
         {
             if (!genutzt)

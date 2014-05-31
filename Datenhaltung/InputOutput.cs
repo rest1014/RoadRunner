@@ -10,6 +10,10 @@ namespace Tool
 {
     public class InputOutput
     {
+        public static int GetPeriod()
+        {
+            return instance.AktuellePeriode;
+        }
 
         /// Instanzieren des Datencontainers
         private static DataContainer instance = DataContainer.Instance;
@@ -19,7 +23,8 @@ namespace Tool
         public static void ReadFile()
         {
             XmlReader reader = null;
-            if(instance.Xml){
+            if (instance.Xml)
+            {
                 reader = XmlReader.Create(instance.OpenFile);
 
                 if (!File.Exists(instance.OpenFile))
@@ -30,7 +35,7 @@ namespace Tool
             else if (instance.Inet)
             {
                 reader = XmlReader.Create(instance.OpenFile);
-                
+
             }
 
             bool switchWarehouseStock = false;              //Schalter für Lagereinlesen
@@ -51,7 +56,7 @@ namespace Tool
                 switch (reader.Name)
                 {
                     case "PeriodResults":
-                        if(instance.AktuellePeriode == -1)
+                        if (instance.AktuellePeriode == -1)
                             instance.AktuellePeriode = Convert.ToInt32(reader.GetAttribute("period")) + 1;
                         break;
 
@@ -70,7 +75,7 @@ namespace Tool
 
                     case "WorkplaceWaitinglist":
                         switchWaitingListWPL = !switchWaitingListWPL;
-                        
+
                         //if (reader.NodeType == XmlNodeType.EndElement)
                         //{
                         //    break;
@@ -93,7 +98,7 @@ namespace Tool
                     case "Entry":
                         if (switchWarehouseStock)
                         {
-                            intLastSpacePos = reader.GetAttribute(0).LastIndexOf(" ")+1;
+                            intLastSpacePos = reader.GetAttribute(0).LastIndexOf(" ") + 1;
                             t = instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0).Substring(intLastSpacePos)));
                             t.Lagerstand = Convert.ToInt32(reader.GetAttribute(2));
                             t.Lagerpreis = Convert.ToDouble(reader.GetAttribute(4));
@@ -156,46 +161,46 @@ namespace Tool
 
                         break;
 
-                    
+
                 }
 
             }
 
             reader.Close();
 
-        }				
+        }
 
 
- 
+
         /// WriteInput Methode
         /// schreibt die ScsimInput.xml zum Einlesen in SCSIM
         public static void WriteInput()
         {
-        	CreateOrResetFile();
-        	
+            CreateOrResetFile();
+
             //Dateianfang
             WriteFile("<PeriodInput>");
-            
+
             WriteVerkaufswuensche();
-			WriteBestellungen();
-			WriteProduktionsauftraege();
-			WriteArbeitsplaetze();
+            WriteBestellungen();
+            WriteProduktionsauftraege();
+            WriteArbeitsplaetze();
 
             //Rest
             WriteFile("<MarketplaceTransactions />");
             WriteFile("<IsQualityControlEnabled>false</IsQualityControlEnabled>");
 
-			//Dateiende
+            //Dateiende
             WriteFile("</PeriodInput>");
         }
-        
+
         //Datei erstellen. Wenn bereits vorhanden, Inhalt loeschen
         private static void CreateOrResetFile()
         {
-        	StreamWriter datei;
-//        	datei = File.CreateText(DataContainer.Instance.SaveFile);
+            StreamWriter datei;
+            //        	datei = File.CreateText(DataContainer.Instance.SaveFile);
             datei = File.CreateText(DataContainer.Instance.SaveInputXML);
-        	datei.Close();
+            datei.Close();
         }
 
         private static void WriteVerkaufswuensche()
@@ -215,16 +220,16 @@ namespace Tool
                 WriteFile("</SalesWish>");
             }
 
-            WriteFile("</SalesWishes>");    
+            WriteFile("</SalesWishes>");
 
         }
-         
+
         private static void WriteBestellungen()
         {
-        //Bestellungen
+            //Bestellungen
             WriteFile("<ItemOrders>");
 
-            foreach(Bestellposition bp in instance.Bestellung)
+            foreach (Bestellposition bp in instance.Bestellung)
             {
                 WriteFile("<ItemOrder>");
                 WriteFile("<ItemInternalNumber>" + bp.Kaufteil.Nummer + "</ItemInternalNumber>");
@@ -243,13 +248,13 @@ namespace Tool
 
             WriteFile("</ItemOrders>");
         }
-        
+
         private static void WriteProduktionsauftraege()
         {
-        //Produktionsaufträge
+            //Produktionsaufträge
             WriteFile("<ProductionOrders>");
 
-            foreach(int z in instance.Reihenfolge)
+            foreach (int z in instance.Reihenfolge)
             {
                 ETeil et = instance.GetTeil(z) as ETeil;
 
@@ -264,7 +269,7 @@ namespace Tool
             }
             WriteFile("</ProductionOrders>");
         }
-        
+
         //Arbeitsplatz Ueberstunden und Schichten
         private static void WriteArbeitsplaetze()
         {
@@ -279,11 +284,11 @@ namespace Tool
                 }
 
                 WriteFile("<WorkplaceShift>");
-                WriteFile("<WorkplaceName>" + i +"</WorkplaceName>");
+                WriteFile("<WorkplaceName>" + i + "</WorkplaceName>");
                 WriteFile("<Shifts>" + instance.GetArbeitsplatz(i).Schichten + "</Shifts>");
                 WriteFile("<OvertimeInMinutes>" + instance.GetArbeitsplatz(i).UeberMin + "</OvertimeInMinutes>");
                 WriteFile("</WorkplaceShift>");
-           }
+            }
             WriteFile("</WorkplaceShifts>");
         }
 
@@ -295,12 +300,11 @@ namespace Tool
         /// <param name="Name">Dateiname</param>
         private static void WriteFile(string Inhalt)
         {
-        	StreamWriter datei;
-//        	datei = File.AppendText(DataContainer.Instance.SaveFile);
+            StreamWriter datei;
+            //        	datei = File.AppendText(DataContainer.Instance.SaveFile);
             datei = File.AppendText(DataContainer.Instance.SaveInputXML);
             datei.WriteLine(Inhalt);
             datei.Close();
         }
-
     }
 }
