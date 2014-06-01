@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window
+	x:Class="Tool.Datenpräsentation.Puffer" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Title="Tool.Datenpräsentation"
+	Height="300"
+	Width="300" >
+	<Grid>
+		<ComboBox
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Margin="36,29,0,0"
+			Width="120"
+			Height="20"
+			Name="comboBox1"
+			SelectedIndex="0">
+			<ComboBoxItem
+				Content="50"></ComboBoxItem>
+			<ComboBoxItem
+				Content="100"></ComboBoxItem>
+			<ComboBoxItem
+				Content="150"></ComboBoxItem>
+		</ComboBox>
+		<ComboBox
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Margin="36,58,0,0"
+			Width="120"
+			Height="20"
+			Name="comboBox2"
+			SelectedIndex="0">
+			<ComboBoxItem
+				Content="50"></ComboBoxItem>
+			<ComboBoxItem
+				Content="100"></ComboBoxItem>
+			<ComboBoxItem
+				Content="150"></ComboBoxItem>
+		</ComboBox>
+		<ComboBox
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Margin="36,87,0,0"
+			Width="120"
+			Height="20"
+			Name="comboBox3"
+			SelectedIndex="0">
+			<ComboBoxItem
+				Content="50"></ComboBoxItem>
+			<ComboBoxItem
+				Content="100"></ComboBoxItem>
+			<ComboBoxItem
+				Content="150"></ComboBoxItem>
+		</ComboBox>
+		<Label
+			Content="P1"
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Margin="8,29,0,0"
+			Width="31"
+			Height="28" />
+		<Label
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Margin="8,58,0,0"
+			Width="31"
+			Height="28"
+			Content="P3" />
+		<Label
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Margin="8,87,0,0"
+			Width="31"
+			Height="28"
+			Content="P2" />
+		<Label
+			Content="TODO: &#xD;&#xA;Puffereinstellungen für&#xD;&#xA;die übrigen Teile, analog&#xD;&#xA;zu P1-P3 oben einbauen"
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Bottom"
+			Margin="16,0,0,24"
+			Width="152"
+			Height="120" />
+		<Button
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Bottom"
+			Margin="0,0,8,14"
+			Width="75"
+			Height="23"
+			Content="Weiter"
+			Name="button1"
+			Click="button1_Click" />
+    </Grid>
+</Window>
