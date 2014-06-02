@@ -26,9 +26,6 @@ namespace Tool
             {
                 Boolean eilBestellung = false;
 
-                if (k.Nummer == 23) 
-                { int a = 0; }
-
                 // Nichts bestellen in Periode 0
                 int[] endErgebnis = extendedWagnerWithinAlgorithm(k, false, true);
 

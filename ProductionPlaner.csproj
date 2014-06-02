@@ -98,6 +98,9 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="WizardProgressBarLibrary">
+      <HintPath>WizardProgressBar\WizardProgressBarLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datenhaltung\Arbeitsplatz.cs" />
@@ -248,7 +251,6 @@
     <Resource Include="Resources\arbeitsplaetze.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Fakes Include="Fakes\WizardProgressBarLibrary.fakes" />
     <None Include="Klassendiagramm.cd" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +260,7 @@
     <Resource Include="Resources\logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Fakes\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
