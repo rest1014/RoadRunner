@@ -155,7 +155,7 @@
                 
             <StackPanel>
                     <RadioButton Name="XML" GroupName="DownloadLocation" Content="XML Datei" IsChecked="True" Checked="XML_OnChecked"/>
-                    <RadioButton Name="Internet" GroupName="DownloadLocation" Content="Internet" Checked="Internet_OnChecked"/>
+                    <!--<RadioButton Name="Internet" GroupName="DownloadLocation" Content="Internet" Checked="Internet_OnChecked"/> -->
                 </StackPanel>
 
                 <Button Style="{DynamicResource Poly_Weiter}" Name="buttonInputForecast" Content="Weiter" Click="inputForecast" VerticalAlignment="Bottom" Grid.Row="1" Margin="0,0,25,8" Visibility="Hidden" HorizontalAlignment="Right" />
