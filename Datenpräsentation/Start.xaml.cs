@@ -106,7 +106,8 @@ namespace Tool.Datenpräsentation
         /* //////////////
          * SELECT FILE
          *//////////////
-
+        
+        
         void Internet_OnChecked(object sender, RoutedEventArgs e) {
             FileNameTextBox.Visibility = System.Windows.Visibility.Hidden;
             buttonSelectFile.Visibility = System.Windows.Visibility.Hidden;
@@ -117,6 +118,7 @@ namespace Tool.Datenpräsentation
             //buttonSelectURL.Visibility = System.Windows.Visibility.Visible;
             PeriodCombo.Visibility = System.Windows.Visibility.Visible;
         }
+        
 
         void XML_OnChecked(object sender, RoutedEventArgs e)
         {
