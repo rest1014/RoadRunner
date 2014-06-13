@@ -138,7 +138,7 @@ namespace Tool
                             //Debug.WriteLine(reader.GetAttribute(2));
                             //Debug.WriteLine(Convert.ToInt32(reader.GetAttribute(4).Substring(intLastSpacePos)));
                             //Debug.WriteLine(Convert.ToInt32(Convert.ToDouble(reader.GetAttribute(5))));
-                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(4).Substring(intLastSpacePos)), Convert.ToInt32(Convert.ToDouble(reader.GetAttribute(5))), true);
+                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(4).Substring(intLastSpacePos)), Convert.ToInt32(Convert.ToDouble(reader.GetAttribute(5))));
                             break;
                         }
 
@@ -156,7 +156,7 @@ namespace Tool
                         {
                             ap = instance.GetArbeitsplatz(Convert.ToInt32(reader.GetAttribute(0)));
                             intLastSpacePos = reader.GetAttribute(4).LastIndexOf(" ") + 1;
-                            ap.AddWarteschlange(Convert.ToInt32(reader.GetAttribute(4).Substring(intLastSpacePos)), Convert.ToInt32(reader.GetAttribute(5)), true);
+                            ap.AddAuftraegeInBearbeitung(Convert.ToInt32(reader.GetAttribute(4).Substring(intLastSpacePos)), Convert.ToInt32(reader.GetAttribute(5)), Convert.ToInt32(reader.GetAttribute(6)));
                             break;
                         }
 
