@@ -148,7 +148,7 @@ namespace Tool
                             //Debug.WriteLine(reader.GetAttribute(0).Substring(intLastSpacePos));
                             t = instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0).Substring(intLastSpacePos)));
                             t.Lagerstand -= Convert.ToInt32(reader.GetAttribute(5));
-                            
+                            t.Warteschlange += Convert.ToInt32(reader.GetAttribute(5));
                             break;
                         }
 
