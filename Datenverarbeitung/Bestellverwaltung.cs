@@ -35,16 +35,22 @@ namespace Tool
 
                 // Eil Bestellung + nichts bestellen in Periode 0
                 ergebnis = extendedWagnerWithinAlgorithm(k, true, true);
-                if(endErgebnis[0] > ergebnis[0])
+                if (endErgebnis[0] > ergebnis[0])
+                {
                     eilBestellung = true;
-                endErgebnis = (endErgebnis[0] < ergebnis[0]) ? endErgebnis : ergebnis;
+                    endErgebnis = ergebnis;
+                }
+                //endErgebnis = (endErgebnis[0] < ergebnis[0]) ? endErgebnis : ergebnis;
 
                 // Eil Bestellung 
                 // Fals Normalbestellungen zu lange dauern soll Eilbestellt werden
                 ergebnis = extendedWagnerWithinAlgorithm(k, true, false);
                 if (endErgebnis[0] > 100000 || endErgebnis[0] > ergebnis[0])
+                {
                     eilBestellung = true;
-                endErgebnis = (endErgebnis[0] > 100000 || ergebnis[0] < endErgebnis[0] ) ? ergebnis : endErgebnis;
+                    endErgebnis = ergebnis;
+                }
+                //endErgebnis = (endErgebnis[0] > 100000 || ergebnis[0] < endErgebnis[0] ) ? ergebnis : endErgebnis;
 
                 if (endErgebnis[1] != 0 && k.Diskontmenge != 0)
                 {
@@ -69,6 +75,7 @@ namespace Tool
         {
             //akt. Lagerstand zu Periodenbeginn und ausstehende Lieferung
             int lagerBestand = k.Lagerstand + k.ErwarteteBestellung;
+            // Spalten: 4 Perioden | Zeilen: (0) Lagerkosten + Bestellkosten, (1), (2), (3), (4) Lagerkosten
             int[,] ww = new int[4, 5];
             int[] bestPeriodOption = new int[4] { 0, 0, 0, 0 };
 
@@ -77,7 +84,7 @@ namespace Tool
             {
                 for (int periode = 0; periode < 4; periode++)
                 {
-                    double lagerKosten = lagerKostenBerechnung(k, 0, periode, 0,new int[4, 2], eil);
+                    double lagerKosten = lagerKostenBerechnung(k, 0, periode, 0, new int[4, 2], eil);
                     ww[periode, 4] = Convert.ToInt32(lagerKosten);
                 }
             }
@@ -95,10 +102,11 @@ namespace Tool
             {
                 for (int periode = zeitpunkt; periode < 4; periode++)
                 {
+                    // Spalten: | Zeilen: 
                     int[,] vorhergehendeBestellungen = new int[4,4];                
-                    if (periode - 1 >= 0)
-                        vorhergehendeBestellungen = getKostenUndMenge(ww, bestPeriodOption,periode, k);
-                    double bestPrePeriodCosts = (zeitpunkt - 1 >= 0) ? ww[zeitpunkt - 1, bestPeriodOption[zeitpunkt - 1]] : 0;
+                    if (periode > 0)
+                        vorhergehendeBestellungen = getKostenUndMenge(ww, bestPeriodOption, periode, k);
+                    double bestPrePeriodCosts = (zeitpunkt > 0) ? ww[zeitpunkt - 1, bestPeriodOption[zeitpunkt - 1]] : 0;
                     double bestellKosten = eil ? k.Bestellkosten * 10 : k.Bestellkosten;
                     
                     int bestellMenge = bestellMengenBerechnung(k, zeitpunkt, periode);
@@ -131,7 +139,7 @@ namespace Tool
             // Verbrauch vom Bestand abziehen
             for (int i = 0; i < zeitpunkt; i++)
             {
-                lagerBestand = lagerBestand - periodenBedarf[i];
+                lagerBestand -= periodenBedarf[i];
             }
 
             // einkommenden Bestellungen
@@ -142,8 +150,8 @@ namespace Tool
                 lieferZeit = (int)Math.Round(k.Lieferdauer / 2);
             }
 
-            for (int period =0; period <4; period++) {
-                bestellungen[period + lieferZeit] = vorhergehendeBestellungen[period,1];
+            for (int period = 0; period < 4; period++) {
+                bestellungen[period + lieferZeit] = vorhergehendeBestellungen[period, 1];
             }
             //bestellungen[(periode + lieferZeit)] += bestellMenge;
 
