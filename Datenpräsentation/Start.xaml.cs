@@ -77,7 +77,7 @@ namespace Tool.Datenpräsentation
             labelPUFFER.Background = null;
             labelNACHBESTELLUNG.Background = null;
             labelZUSAMMENFASSUNG.Background = null;
-            ChangeLanguage("de-DE");
+            ChangeLanguage("en-US");
 
         }
 
