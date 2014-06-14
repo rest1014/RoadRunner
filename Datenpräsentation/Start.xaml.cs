@@ -12,17 +12,40 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Threading;
+using System.Globalization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Threading;
+using System.Globalization;
 
 namespace Tool.Datenpräsentation
 {
 
-	/// <summary>
-	/// Interaction logic for Window1.xaml
-	/// </summary>
+    /// <summary>
+    /// Interaction logic for Window1.xaml
+    /// </summary>
     /// 
 
     public partial class WindowStart : Window, INotifyPropertyChanged
-	{
+    {
         DataContainer dc = DataContainer.Instance;
         string fileName = "";
         static int kaufteilNummer = 0;
@@ -32,12 +55,14 @@ namespace Tool.Datenpräsentation
         static bool fertig = false;
 
         const String MSG_KEINE_NUM_WERTE_IN_PUFFERFELD = "Einige Pufferfelder enthalten keine numerischen Zeichen!";
-        const String MSG_FILENAME_INPUT_XML = "Input_Period_"; 
+        const String MSG_FILENAME_INPUT_XML = "Input_Period_";
 
-		public WindowStart()
-		{
-			InitializeComponent();
-            
+        BrushConverter bc = new BrushConverter();
+
+        public WindowStart()
+        {
+            InitializeComponent();
+
             Steps = new ObservableCollection<string>();
             Steps.Add("WILLKOMMEN");
             Steps.Add("STAMMDATEN");
@@ -46,9 +71,15 @@ namespace Tool.Datenpräsentation
             Steps.Add("NACHBESTELLUNG");
             Steps.Add("AUSGABE");
             this.DataContext = this;
+            labelWILLKOMMEN.Background = (Brush)bc.ConvertFrom("#FF7FD009");
+            labelINPUT.Background = null;
+            labelVERKAUFSPROGNOSE.Background = null;
+            labelPUFFER.Background = null;
+            labelNACHBESTELLUNG.Background = null;
+            labelZUSAMMENFASSUNG.Background = null;
+            ChangeLanguage("de-DE");
 
-            Progress += 15;
-		}
+        }
 
         private int m_progress;
         public int Progress
@@ -105,8 +136,9 @@ namespace Tool.Datenpräsentation
 
         /* //////////////
          * SELECT FILE
-         *//////////////
-        
+         */
+        /////////////
+
         /*
         void Internet_OnChecked(object sender, RoutedEventArgs e) {
             FileNameTextBox.Visibility = System.Windows.Visibility.Hidden;
@@ -135,13 +167,21 @@ namespace Tool.Datenpräsentation
         void selectFile(object sender, RoutedEventArgs e)
         {
 
-                this.IncreaseButton_Click(sender, e);
+            this.IncreaseButton_Click(sender, e);
 
-                outputGrid.Visibility = System.Windows.Visibility.Hidden;
+            outputGrid.Visibility = System.Windows.Visibility.Hidden;
 
-                welcomeText.Visibility = System.Windows.Visibility.Hidden;
-                ForecastGrid.Visibility = System.Windows.Visibility.Hidden;
-                DragDropGrid.Visibility = System.Windows.Visibility.Visible;
+            welcomeText.Visibility = System.Windows.Visibility.Hidden;
+            ForecastGrid.Visibility = System.Windows.Visibility.Hidden;
+            DragDropGrid.Visibility = System.Windows.Visibility.Visible;
+
+            labelWILLKOMMEN.Background = null;
+            labelINPUT.Background = (Brush)bc.ConvertFrom("#FF7FD009");
+            labelVERKAUFSPROGNOSE.Background = null;
+            labelPUFFER.Background = null;
+            labelNACHBESTELLUNG.Background = null;
+            labelZUSAMMENFASSUNG.Background = null;
+
         }
 
         private void btnExportFile(object sender, RoutedEventArgs args)
@@ -165,7 +205,7 @@ namespace Tool.Datenpräsentation
                 FileNameTextBox_Export.Text = filename;
 
                 dc.SaveInputXML = filename;
-                
+
                 //InputOutput.ReadFile();
 
                 //buttonInputForecast.Visibility = System.Windows.Visibility.Visible;
@@ -231,7 +271,7 @@ namespace Tool.Datenpräsentation
 
                     buttonInputForecast.Visibility = System.Windows.Visibility.Visible;
 
-                    System.Windows.MessageBox.Show("Lokale Datei erfolgreich eingelesen!", "Datei erfolgreich gelesen");
+                    System.Windows.MessageBox.Show("Die XML-Datei wurde erfolgreich eingelesen.", "Info");
                 }
             }
             else { }
@@ -264,7 +304,7 @@ namespace Tool.Datenpräsentation
             InputOutput.ReadFile();
 
             buttonInputForecast.Visibility = System.Windows.Visibility.Visible;
-                 
+
         }
 
         // If the data object in args is a single file, this method will return the filename.
@@ -292,12 +332,19 @@ namespace Tool.Datenpräsentation
 
         /* //////////////
          * Back Buttons
-         *//////////////
+         */
+        /////////////
         void backSelectFile(object sender, RoutedEventArgs e)
         {
             Progress = 15;
             welcomeText.Visibility = System.Windows.Visibility.Visible;
             DragDropGrid.Visibility = System.Windows.Visibility.Hidden;
+            labelWILLKOMMEN.Background = (Brush)bc.ConvertFrom("#FF7FD009");
+            labelINPUT.Background = null;
+            labelVERKAUFSPROGNOSE.Background = null;
+            labelPUFFER.Background = null;
+            labelNACHBESTELLUNG.Background = null;
+            labelZUSAMMENFASSUNG.Background = null;
         }
 
         void backForecast(object sender, RoutedEventArgs e)
@@ -332,11 +379,18 @@ namespace Tool.Datenpräsentation
             ergebnisGrid.Visibility = System.Windows.Visibility.Hidden;
 
             outputGrid.Visibility = System.Windows.Visibility.Visible;
+            labelWILLKOMMEN.Background = null;
+            labelINPUT.Background = null;
+            labelVERKAUFSPROGNOSE.Background = null;
+            labelPUFFER.Background = null;
+            labelNACHBESTELLUNG.Background = null;
+            labelZUSAMMENFASSUNG.Background = (Brush)bc.ConvertFrom("#FF7FD009");
         }
 
         /* //////////////
          * INPUT FORECAST
-         *//////////////
+         */
+        /////////////
         void inputForecast(object sender, RoutedEventArgs e)
         {
             this.IncreaseButton_Click(sender, e);
@@ -345,14 +399,22 @@ namespace Tool.Datenpräsentation
             bufferGrid.Visibility = System.Windows.Visibility.Hidden;
             ForecastGrid.Visibility = System.Windows.Visibility.Visible;
 
-             //TODO: new Prognoseeingabe().Show();
+            labelWILLKOMMEN.Background = null;
+            labelINPUT.Background = null;
+            labelVERKAUFSPROGNOSE.Background = (Brush)bc.ConvertFrom("#FF7FD009");
+            labelPUFFER.Background = null;
+            labelNACHBESTELLUNG.Background = null;
+            labelZUSAMMENFASSUNG.Background = null;
+
+            //TODO: new Prognoseeingabe().Show();
         }
 
 
 
         /* //////////////
          * INPUT BUFFER
-         *//////////////
+         */
+        /////////////
         void inputButtonBuffer(object sender, RoutedEventArgs e)
         {
             this.IncreaseButton_Click(sender, e);
@@ -360,6 +422,12 @@ namespace Tool.Datenpräsentation
             ForecastGrid.Visibility = System.Windows.Visibility.Hidden;
             ArticleOrderGrid.Visibility = System.Windows.Visibility.Hidden;
             bufferGrid.Visibility = System.Windows.Visibility.Visible;
+            labelWILLKOMMEN.Background = null;
+            labelINPUT.Background = null;
+            labelVERKAUFSPROGNOSE.Background = null;
+            labelPUFFER.Background = (Brush)bc.ConvertFrom("#FF7FD009");
+            labelNACHBESTELLUNG.Background = null;
+            labelZUSAMMENFASSUNG.Background = null;
 
             berechneVerbrauch();
         }
@@ -371,9 +439,15 @@ namespace Tool.Datenpräsentation
             ForecastGrid.Visibility = System.Windows.Visibility.Hidden;
             ArticleOrderGrid.Visibility = System.Windows.Visibility.Hidden;
             bufferGrid.Visibility = System.Windows.Visibility.Hidden;
-            outputGrid.Visibility  = System.Windows.Visibility.Hidden;
+            outputGrid.Visibility = System.Windows.Visibility.Hidden;
 
             ergebnisGrid.Visibility = System.Windows.Visibility.Visible;
+            labelWILLKOMMEN.Background = null;
+            labelINPUT.Background = null;
+            labelVERKAUFSPROGNOSE.Background = null;
+            labelPUFFER.Background = null;
+            labelNACHBESTELLUNG.Background = null;
+            labelZUSAMMENFASSUNG.Background = (Brush)bc.ConvertFrom("#FF7FD009");
 
             fillChart();
 
@@ -382,11 +456,11 @@ namespace Tool.Datenpräsentation
 
         private void fillChart()
         {
-            String periodstarttext = "Periode "+(dc.AktuellePeriode-1);
+            String periodstarttext = "Periode " + (dc.AktuellePeriode - 1);
             String periodendtext = "Periode " + dc.AktuellePeriode;
 
             ((System.Windows.Controls.DataVisualization.Charting.LineSeries)mcChart.Series[0]).ItemsSource =
-        new KeyValuePair<String,double>[]{
+        new KeyValuePair<String, double>[]{
         new KeyValuePair<String,double>(periodstarttext, dc.lagerwertStart),
         new KeyValuePair<String,double>(periodendtext, dc.minLagerwertEnd) };
 
@@ -401,12 +475,12 @@ namespace Tool.Datenpräsentation
         new KeyValuePair<String,double>(periodendtext, dc.maxLagerwertEnd) };
 
             double durchschnittEnd = (dc.minLagerwertEnd + dc.normalLagerwertEnd + dc.maxLagerwertEnd) / 3.0;
-/*
-            ((System.Windows.Controls.DataVisualization.Charting.LineSeries)mcChart.Series[3]).ItemsSource =
-        new KeyValuePair<String, double>[]{
-        new KeyValuePair<String,double>(periodstarttext, dc.lagerwertStart),
-        new KeyValuePair<String,double>(periodendtext, durchschnittEnd) };
-            */
+            /*
+                        ((System.Windows.Controls.DataVisualization.Charting.LineSeries)mcChart.Series[3]).ItemsSource =
+                    new KeyValuePair<String, double>[]{
+                    new KeyValuePair<String,double>(periodstarttext, dc.lagerwertStart),
+                    new KeyValuePair<String,double>(periodendtext, durchschnittEnd) };
+                        */
         }
 
         private void berechneVerbrauch()
@@ -429,7 +503,8 @@ namespace Tool.Datenpräsentation
 
         /* //////////////
          * INPUT NACHBESTELLUNG
-        *//////////////
+        */
+        /////////////
         void inputOrder(object sender, RoutedEventArgs e)
         {
             if (!checkInput())
@@ -437,12 +512,18 @@ namespace Tool.Datenpräsentation
                 System.Windows.MessageBox.Show(MSG_KEINE_NUM_WERTE_IN_PUFFERFELD);
                 return;
             }
-            
+
             this.IncreaseButton_Click(sender, e);
 
             bufferGrid.Visibility = System.Windows.Visibility.Hidden;
             outputGrid.Visibility = System.Windows.Visibility.Hidden;
             ArticleOrderGrid.Visibility = System.Windows.Visibility.Visible;
+            labelWILLKOMMEN.Background = null;
+            labelINPUT.Background = null;
+            labelVERKAUFSPROGNOSE.Background = null;
+            labelPUFFER.Background = null;
+            labelNACHBESTELLUNG.Background = (Brush)bc.ConvertFrom("#FF7FD009");
+            labelZUSAMMENFASSUNG.Background = null;
         }
 
         bool checkInput()
@@ -550,7 +631,14 @@ namespace Tool.Datenpräsentation
             this.IncreaseButton_Click(sender, e);
 
             ArticleOrderGrid.Visibility = System.Windows.Visibility.Hidden;
-            outputGrid.Visibility = System.Windows.Visibility.Visible;
+            ergebnisGrid.Visibility = System.Windows.Visibility.Visible;
+
+            labelWILLKOMMEN.Background = null;
+            labelINPUT.Background = null;
+            labelVERKAUFSPROGNOSE.Background = null;
+            labelPUFFER.Background = null;
+            labelNACHBESTELLUNG.Background = null;
+            labelZUSAMMENFASSUNG.Background = (Brush)bc.ConvertFrom("#FF7FD009");
 
             writeUserOdersToDcOrderList();
 
@@ -631,7 +719,8 @@ namespace Tool.Datenpräsentation
 
             for (int i = 1; i <= 15; i++)
             {
-                if (i != 5) {
+                if (i != 5)
+                {
                     benoetigteZeit += dc.GetArbeitsplatz(i).BenoetigteZeit;
                     zurVerfuegungStehendeZeit += dc.GetArbeitsplatz(i).ZuVerfuegungStehendeZeit;
                 }
@@ -703,20 +792,20 @@ namespace Tool.Datenpräsentation
             ToolTipService.SetToolTip(S14, (dc.GetArbeitsplatz(14).BenoetigteZeit * 100) / dc.GetArbeitsplatz(14).ZuVerfuegungStehendeZeit + "% Auslastung (" + dc.GetArbeitsplatz(14).BenoetigteZeit + " Min. von " + dc.GetArbeitsplatz(14).ZuVerfuegungStehendeZeit + " Min.)");
             ToolTipService.SetToolTip(S15A, (dc.GetArbeitsplatz(15).BenoetigteZeit * 100) / dc.GetArbeitsplatz(15).ZuVerfuegungStehendeZeit + "% Auslastung (" + dc.GetArbeitsplatz(15).BenoetigteZeit + " Min. von " + dc.GetArbeitsplatz(15).ZuVerfuegungStehendeZeit + " Min.)");
             ToolTipService.SetToolTip(S15B, (dc.GetArbeitsplatz(15).BenoetigteZeit * 100) / dc.GetArbeitsplatz(15).ZuVerfuegungStehendeZeit + "% Auslastung (" + dc.GetArbeitsplatz(15).BenoetigteZeit + " Min. von " + dc.GetArbeitsplatz(15).ZuVerfuegungStehendeZeit + " Min.)");
-            
+
             E13.Text = Convert.ToString("E13: " + (dc.GetTeil(13) as ETeil).Produktionsmenge);
-            ToolTipService.SetToolTip(E13, Stammdaten.TBez.GetValue(13-1));
+            ToolTipService.SetToolTip(E13, Stammdaten.TBez.GetValue(13 - 1));
             E14.Text = Convert.ToString("E14: " + (dc.GetTeil(14) as ETeil).Produktionsmenge);
-            ToolTipService.SetToolTip(E14, Stammdaten.TBez.GetValue(14-1));
+            ToolTipService.SetToolTip(E14, Stammdaten.TBez.GetValue(14 - 1));
             E15.Text = Convert.ToString("E15: " + (dc.GetTeil(15) as ETeil).Produktionsmenge);
-            ToolTipService.SetToolTip(E15, Stammdaten.TBez.GetValue(15-1));
+            ToolTipService.SetToolTip(E15, Stammdaten.TBez.GetValue(15 - 1));
 
             E18.Text = Convert.ToString("E18: " + (dc.GetTeil(18) as ETeil).Produktionsmenge);
-            ToolTipService.SetToolTip(E18, Stammdaten.TBez.GetValue(18-1));
+            ToolTipService.SetToolTip(E18, Stammdaten.TBez.GetValue(18 - 1));
             E19.Text = Convert.ToString("E19: " + (dc.GetTeil(19) as ETeil).Produktionsmenge);
-            ToolTipService.SetToolTip(E19, Stammdaten.TBez.GetValue(19-1));
+            ToolTipService.SetToolTip(E19, Stammdaten.TBez.GetValue(19 - 1));
             E20.Text = Convert.ToString("E20: " + (dc.GetTeil(20) as ETeil).Produktionsmenge);
-            ToolTipService.SetToolTip(E20, Stammdaten.TBez.GetValue(20-1));
+            ToolTipService.SetToolTip(E20, Stammdaten.TBez.GetValue(20 - 1));
 
             E7.Text = Convert.ToString("E7: " + (dc.GetTeil(7) as ETeil).Produktionsmenge);
             ToolTipService.SetToolTip(E7, Stammdaten.TBez.GetValue(7 - 1));
@@ -782,7 +871,8 @@ namespace Tool.Datenpräsentation
 
         /*//////////////
         * OUTPUT
-        *//////////////
+        */
+        /////////////
         /*void createOutputFile(object sender, RoutedEventArgs e)
         {
             InputOutput.WriteInput();
@@ -979,13 +1069,15 @@ namespace Tool.Datenpräsentation
             }
         }
 
-        private string resolveOrderTypeForComboBox(Boolean eil) {
-            return eil? "Schnell" : "Normal";
+        private string resolveOrderTypeForComboBox(Boolean eil)
+        {
+            return eil ? "Schnell" : "Normal";
         }
 
         private void writeUserOdersToDcOrderList()
         {
-            if (textBoxK21.Text != null && textBoxK21.Text != "") {
+            if (textBoxK21.Text != null && textBoxK21.Text != "")
+            {
                 writeUserDataToDc(21, textBoxK21.Text, comboBoxK21.Text);
             }
             if (textBoxK22.Text != null && textBoxK22.Text != "")
@@ -1113,7 +1205,7 @@ namespace Tool.Datenpräsentation
             }
 
 
-            
+
         }
 
         private static bool BestellungExists(Bestellposition bp)
@@ -1128,7 +1220,7 @@ namespace Tool.Datenpräsentation
             }
         }
 
-       private static bool getKaufteil(Kaufteil k)
+        private static bool getKaufteil(Kaufteil k)
         {
             if (k.Nummer == kaufteilNummer)
             {
@@ -1139,5 +1231,65 @@ namespace Tool.Datenpräsentation
                 return false;
             }
         }
-	}
+
+        private void button_DE_click(object sender, MouseButtonEventArgs e)
+        {
+            ChangeLanguage("de-DE");
+        }
+
+        private void button_EN_click(object sender, MouseButtonEventArgs e)
+        {
+            ChangeLanguage("en-US");
+        }
+        /// <summary>
+        /// Sprache wechseln
+        /// </summary>
+        /// <param name="culture">specific culture</param>
+        public void ChangeLanguage(string culture)
+        {
+            // Alle Woerterbuecher finden   
+            List<ResourceDictionary> dictionaryList = new List<ResourceDictionary>();
+            foreach (ResourceDictionary dictionary in System.Windows.Application.Current.Resources.MergedDictionaries)
+            {
+                dictionaryList.Add(dictionary);
+            }
+
+            // Woerterbuch waehlen
+            string requestedCulture = string.Format("Cultures/CultResource.{0}.xaml", culture);
+            ResourceDictionary resourceDictionary = dictionaryList.FirstOrDefault(d => d.Source.OriginalString == requestedCulture);
+            if (resourceDictionary == null)
+            {
+                // Wenn das gewuenschte Woerterbuch nicht gefunden wird,
+                // lade Standard-Woerterbuch
+                requestedCulture = "Cultures/CultResource.xaml";
+                resourceDictionary = dictionaryList.FirstOrDefault(d => d.Source.OriginalString == requestedCulture);
+            }
+
+            // Altes Woerterbuch loeschen und Neues hinzufuegen       
+            if (resourceDictionary != null)
+            {
+                System.Windows.Application.Current.Resources.MergedDictionaries.Remove(resourceDictionary);
+                System.Windows.Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
+            }
+
+            // Hauptthread ueber neues Culture informieren
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(culture);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+        }
+
+
+
+        private void de_button(object sender, RoutedEventArgs e)
+        {
+            ChangeLanguage("de-DE");
+        }
+
+        private void en_button(object sender, RoutedEventArgs e)
+        {
+            ChangeLanguage("en-US");
+        }
+
+
+
+    }
 }
