@@ -53,14 +53,13 @@ namespace Tool
             }
         }
 
-        // Wagner Within Algorithmus
-        // Lieferzeit eingenommen
-        // Lagerkosten auf verzoegerte Lieferzeit bezogen
-        //
-        // Fals negativer Lagerbestand auftritt werden die kosten * 1000 genommen
-        // So werden Eilbestellungen attraktiv negativer Lagerbestand bei Eilbestellungen * 10
         /// <summary>
+        /// Wagner Within Algorithmus.
+        /// Lieferzeit eingenommen.
+        /// Lagerkosten auf verzoegerte Lieferzeit bezogen.
         /// 
+        /// Falls negativer Lagerbestand auftritt werden die kosten * 1000 genommen.
+        /// So werden Eilbestellungen attraktiv negativer Lagerbestand bei Eilbestellungen * 10
         /// </summary>
         /// <param name="k">Kaufteil</param>
         /// <param name="eil">Eilbestellung</param>
