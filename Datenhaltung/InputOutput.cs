@@ -147,8 +147,8 @@ namespace Tool
                             intLastSpacePos = reader.GetAttribute(0).LastIndexOf(" ") + 1;
                             //Debug.WriteLine(reader.GetAttribute(0).Substring(intLastSpacePos));
                             t = instance.GetTeil(Convert.ToInt32(reader.GetAttribute(0).Substring(intLastSpacePos)));
-                            t.Lagerstand -= Convert.ToInt32(reader.GetAttribute(5));
-                            t.Warteschlange += Convert.ToInt32(reader.GetAttribute(5));
+                            //t.Lagerstand -= Convert.ToInt32(reader.GetAttribute(5));
+                            //t.Warteschlange += Convert.ToInt32(reader.GetAttribute(5));
                             break;
                         }
 
@@ -257,15 +257,20 @@ namespace Tool
 
             foreach (int z in instance.Reihenfolge)
             {
-                ETeil et = instance.GetTeil(z) as ETeil;
-
-                if (et.Produktionsmenge > 0)
+                if (z > 0)
                 {
-                    WriteFile("<ProductionOrder>");
-                    WriteFile("<ItemInternalNumber>" + et.Nummer + "</ItemInternalNumber>");
-                    WriteFile("<Quantity>" + et.Produktionsmenge + "</Quantity>");
+                    ETeil et = instance.GetTeil(z) as ETeil;
 
-                    WriteFile("</ProductionOrder>");
+                    if (et.Produktionsmenge > 0)
+                    {
+                        WriteFile("<ProductionOrder>");
+                        WriteFile("<ItemInternalNumber>" + et.Nummer + "</ItemInternalNumber>");
+                        //WriteFile("<Quantity>" + et.Produktionsmenge + "</Quantity>");
+                        WriteFile("<Quantity>" + Convert.ToInt32(et.Produktionsmenge / 2) + "</Quantity>");
+
+
+                        WriteFile("</ProductionOrder>");
+                    }
                 }
             }
             WriteFile("</ProductionOrders>");
