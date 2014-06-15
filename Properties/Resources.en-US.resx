@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="WindowStart-labelINPUT" xml:space="preserve">
-    <value>DATENIMPORT</value>
+    <value>DATA IMPORT</value>
   </data>
   <data name="WindowStart-labelNACHBESTELLUNG" xml:space="preserve">
-    <value>BESTELLUNG</value>
+    <value>ORDER</value>
   </data>
   <data name="WindowStart-labelPUFFER" xml:space="preserve">
-    <value>PUFFER</value>
+    <value>BUFFER</value>
   </data>
   <data name="WindowStart-labelVERKAUFSPROGNOSE" xml:space="preserve">
-    <value>ABSATZ</value>
+    <value>SALES</value>
   </data>
   <data name="WindowStart-labelWILLKOMME" xml:space="preserve">
     <value>START</value>
   </data>
   <data name="WindowStart-labelZUSAMMENFASSUNG" xml:space="preserve">
-    <value>ERGEBNIS</value>
+    <value>RESULT</value>
   </data>
 </root>

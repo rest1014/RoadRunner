@@ -120,7 +120,7 @@
         		VerticalAlignment="Top"
         		Width="602"
         		Height="86"
-        		Content="{DynamicResource WindowStart-labelXML}" Margin="84,5,0,0" Grid.Row="1" />
+        		Content="In diesem Schritt erfolgt das Importieren der XML-Datei. Hierdurch werden die für die Planung erforderlichen &#xA;Stammdaten eingelesen.&#xA;&#xA;Bitte wählen Sie in dem Dialog Ihre lokal gespeicherte XML-Datei aus." Margin="84,5,0,0" Grid.Row="1" />
         </Grid>
 
         <!-- bei allen Zurück und Weiter Buttons waren folgende Parameter definiert: Width="100" Height="25" -->
@@ -640,7 +640,7 @@
 				Content="750"/>
             </ComboBox>
             <Label
-			Content="{DynamicResource WindowStart-labelForecast}"
+			Content="In diesem Schritt erfolgt die Eingabe der geplanten Absatzmengen. &#xA;Geben Sie hierfür bitte in Spalte 1 die Werte für die kommende Periode ein. In den rechten drei Spalten geben Sie bitte&#xA;einen Forecast-Wert ein."
 			Grid.Column="0"
 			Grid.Row="0"
 			HorizontalAlignment="Left"
@@ -995,7 +995,7 @@
                 Style="{DynamicResource Poly_Zurueck}"
                 x:Name="buttonBackBuffer" Content="Zurück" Click="backBuffer" VerticalAlignment="Bottom" Margin="774,0,0,6" HorizontalAlignment="Left" Background="#FF8FE611" Width="66" Height="33" RenderTransformOrigin="-0.714,-0.431" />
             <Label
-            	Content="{DynamicResource WindowStart-labelVBuffer}"
+            	Content="Hier aufgezeigt sind die vom Produktionsplanungssystem vorgeschlagenen Puffer. Sie können diese entweder&#xA;unverändert übernehmen, oder ganz bzw. teilweise anpassen."
             	Grid.Column="0"
             	Grid.Row="0"
             	HorizontalAlignment="Left"
@@ -1193,7 +1193,7 @@
                 <ComboBoxItem Content="Schnell" />
             </ComboBox>
             <Label
-            	Content="{DynamicResource WindowStart-labelOrder}"
+            	Content="In diesem Prozessschritt erfolgt die Festlegung der Bestellmengen von Fremdbezugsteilen. Sie können entweder&#xA;manuell Ihre eigenen Bestellwünsche erfassen oder die optimalen Bestellmengen vom System berechnen lassen.&#xA;Um die Bestellmengen vom System berechnen zu lassen, klicken Sie auf den entsprechenden Button."
             	Grid.Column="0"
             	Grid.Row="0"
             	HorizontalAlignment="Left"
@@ -1201,7 +1201,7 @@
             	Margin="-46,-32,0,0"
             	Width="644"
             	Height="71" />
-            <Button x:Name="buttonCalculateOrder" Content="{DynamicResource WindowStart-labelCalculate}" HorizontalAlignment="Left" Margin="610,39,0,0" Width="102" Height="39" Click="calculateOrder" VerticalAlignment="Top" BorderBrush="White" FontSize="11" Background="#FFB4BBC4"/>
+            <Button x:Name="buttonCalculateOrder" Content="Berechne&#xA;Bestellmengen" HorizontalAlignment="Left" Margin="610,39,0,0" Width="102" Height="39" Click="calculateOrder" VerticalAlignment="Top" BorderBrush="White" FontSize="11" Background="#FFB4BBC4"/>
 
         </Grid>
 
@@ -1336,7 +1336,7 @@
             	VerticalAlignment="Top"
             	Width="602"
             	Height="86"
-            	Content="{DynamicResource WindowStart-labelSuccess}" Margin="74,22,0,0" Grid.ColumnSpan="2" />
+            	Content="Die Planung wurde erfolgreich durchgeführt. Hier finden Sie eine Übersicht über das Ergebnis der Periode.&#xA;Sie haben nun die Möglichkeit das Ergebnis in eine XML-Datei zu speichern. Wählen  Sie hierfür den &#xA;Button &quot;Speichern&quot;." Margin="74,22,0,0" Grid.ColumnSpan="2" />
             <Button x:Name="btnExportXML" Content="{DynamicResource WindowStart-labelSave}" HorizontalAlignment="Left" Margin="232.5,35,0,0" Width="102" Height="39" Click="btnExportFile" VerticalAlignment="Top" BorderBrush="White" FontSize="11" Background="#FFB4BBC4" Grid.Column="1"/>
 
         </Grid>

@@ -20,6 +20,6 @@
     <system:String x:Key="WindowStart-labelOrder">In diesem Prozessschritt erfolgt die Festlegung der Bestellmengen von Fremdbezugsteilen. Sie können entweder&#xA;manuell Ihre eigenen Bestellwünsche erfassen oder die optimalen Bestellmengen vom System berechnen lassen.&#xA;Um die Bestellmengen vom System berechnen zu lassen, klicken Sie auf den entsprechenden Button.</system:String>
     <system:String x:Key="WindowStart-labelCalculate">Berechne&#xA;Bestellmengen</system:String>
     <system:String x:Key="WindowStart-labelSuccess">Die Planung wurde erfolgreich durchgeführt. Hier finden Sie eine Übersicht über das Ergebnis der Periode.&#xA;Sie haben nun die Möglichkeit das Ergebnis in eine XML-Datei zu speichern. Wählen  Sie hierfür den &#xA;Button &quot;Speichern&quot;.</system:String>
-    <system:String x:Key="WindowStart-chooseFile">Datei&#xA;auswählen</system:String>
+    <system:String x:Key="WindowStart-chooseFile">Datei&#xA;öffnen</system:String>
     <system:String x:Key="WindowStart-labelBack">Zurück</system:String>
 </ResourceDictionary>

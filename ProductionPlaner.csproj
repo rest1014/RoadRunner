@@ -105,6 +105,9 @@
     <Compile Include="Datenhaltung\ETeil.cs" />
     <Compile Include="Datenhaltung\Stammdaten.cs" />
     <Compile Include="Datenhaltung\InputOutput.cs" />
+    <Compile Include="Datenpräsentation\App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Datenpräsentation\Ergebnis.xaml.cs">
       <DependentUpon>Ergebnis.xaml.txt</DependentUpon>
     </Compile>
@@ -220,6 +223,10 @@
     <Content Include="WPF Toolkit\v3.5.50211.1\WPFToolkit.pdb" />
     <Content Include="WPF Toolkit\v3.5.50211.1\WPFToolkit.VisualStudio.Design.dll" />
     <Content Include="WPF Toolkit\v3.5.50211.1\WPFToolkit.VisualStudio.Design.pdb" />
+    <Page Include="Datenpräsentation\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Datenpräsentation\cultures\CultResource.de-DE.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
